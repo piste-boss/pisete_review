@@ -1,12 +1,15 @@
 import { getStore } from '@netlify/blobs'
 
-const DEFAULT_STORE_NAME = 'nakotakasu-review-config'
+// デフォルトのBlobsストア名。環境変数で上書きできる。
+const DEFAULT_STORE_NAME = 'arukamo-review-config'
 const memoryStore = new Map()
 
 const resolveStoreName = (name) => {
   if (name) return name
+  // 互換用: 既存のストアを参照したい場合は環境変数で上書きする
   if (process.env.NETLIFY_BLOBS_STORE) return process.env.NETLIFY_BLOBS_STORE
   if (process.env.BLOBS_STORE_NAME) return process.env.BLOBS_STORE_NAME
+  if (process.env.LEGACY_BLOBS_STORE_NAME) return process.env.LEGACY_BLOBS_STORE_NAME
   return DEFAULT_STORE_NAME
 }
 
