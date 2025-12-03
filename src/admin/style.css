@@ -2,17 +2,17 @@
   color-scheme: only light;
   font-family: 'Noto Sans JP', 'Zen Maru Gothic', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', system-ui,
     -apple-system, BlinkMacSystemFont, sans-serif;
-  --surface: #f2faf5;
-  --surface-alt: #e4f2ea;
-  --surface-strong: #cfe9dc;
-  --accent: #0f7b66;
-  --accent-strong: #0a5c4f;
-  --accent-soft: rgba(15, 123, 102, 0.16);
-  --border-soft: rgba(15, 143, 111, 0.22);
-  --text-primary: #1f2f28;
-  --text-secondary: #486159;
-  --text-tertiary: #6b8292;
-  --input-bg: rgba(255, 255, 255, 0.94);
+  --surface: #f4f5f7;
+  --surface-alt: #eef0f3;
+  --surface-strong: #e3e6ec;
+  --accent: #3f4a5a;
+  --accent-strong: #2c3442;
+  --accent-soft: rgba(63, 74, 90, 0.14);
+  --border-soft: rgba(63, 74, 90, 0.18);
+  --text-primary: #1f2733;
+  --text-secondary: #556070;
+  --text-tertiary: #687486;
+  --input-bg: rgba(255, 255, 255, 0.96);
 }
 
 *,
@@ -35,8 +35,8 @@ body {
   align-items: stretch;
   padding: calc(env(safe-area-inset-top, 0px) + 2.5rem) clamp(1.2rem, 6vw, 3rem)
     calc(env(safe-area-inset-bottom, 0px) + 3rem);
-  background: radial-gradient(circle at 10% 10%, rgba(15, 123, 102, 0.14) 0%, transparent 45%),
-    radial-gradient(circle at 90% 0%, rgba(15, 143, 111, 0.12) 0%, transparent 40%),
+  background: radial-gradient(circle at 10% 10%, rgba(63, 74, 90, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 90% 0%, rgba(91, 112, 136, 0.12) 0%, transparent 40%),
     linear-gradient(150deg, var(--surface) 0%, var(--surface-alt) 48%, var(--surface-strong) 100%);
 }
 
@@ -52,10 +52,10 @@ body {
 
 .admin {
   width: min(880px, 100%);
-  background: linear-gradient(180deg, #f6fbff 0%, #ffffff 60%, #e3f1f8 100%);
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 60%, #eef1f5 100%);
   border-radius: clamp(24px, 4vw, 32px);
   padding: clamp(2rem, 4vw, 3.2rem);
-  box-shadow: 0 26px 52px rgba(12, 52, 74, 0.16);
+  box-shadow: 0 26px 52px rgba(31, 39, 51, 0.16);
   display: flex;
   flex-direction: column;
   gap: clamp(1.6rem, 3.5vw, 2.6rem);
@@ -130,7 +130,7 @@ body {
 
 .admin__menu-trigger {
   appearance: none;
-  border: 1px solid rgba(10, 92, 79, 0.18);
+  border: 1px solid rgba(31, 39, 51, 0.18);
   border-radius: 999px;
   padding: 0.65rem 1.8rem;
   font-weight: 700;
@@ -139,7 +139,7 @@ body {
   cursor: pointer;
   background: #fff;
   color: var(--text-primary);
-  box-shadow: 0 22px 38px rgba(12, 52, 74, 0.18);
+  box-shadow: 0 22px 38px rgba(31, 39, 51, 0.18);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -149,7 +149,7 @@ body {
 }
 
 .admin__menu-trigger[aria-expanded='true'] {
-  box-shadow: 0 26px 46px rgba(10, 92, 79, 0.26);
+  box-shadow: 0 26px 46px rgba(31, 39, 51, 0.26);
   color: var(--accent-strong);
 }
 
@@ -172,8 +172,8 @@ body {
   left: 0;
   background: rgba(255, 255, 255, 0.97);
   border-radius: 32px;
-  border: 1px solid rgba(10, 92, 79, 0.18);
-  box-shadow: 0 40px 80px rgba(12, 52, 74, 0.18);
+  border: 1px solid rgba(31, 39, 51, 0.18);
+  box-shadow: 0 40px 80px rgba(31, 39, 51, 0.18);
   padding: 1.1rem;
   width: min(440px, 88vw);
   opacity: 0;
@@ -219,7 +219,7 @@ body {
   padding: 0.3rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.7);
-  box-shadow: inset 0 0 0 1px rgba(10, 92, 79, 0.2);
+  box-shadow: inset 0 0 0 1px rgba(31, 39, 51, 0.2);
 }
 
 .admin__tab {
@@ -236,9 +236,9 @@ body {
 }
 
 .admin__tab.is-active {
-  background: linear-gradient(135deg, rgba(15, 123, 102, 0.16) 0%, rgba(10, 92, 79, 0.2) 100%);
+  background: linear-gradient(135deg, rgba(63, 74, 90, 0.16) 0%, rgba(31, 39, 51, 0.2) 100%);
   color: var(--accent-strong);
-  box-shadow: 0 10px 20px rgba(10, 92, 79, 0.2);
+  box-shadow: 0 10px 20px rgba(31, 39, 51, 0.2);
 }
 
 .admin__panel {
@@ -259,7 +259,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1.3rem;
-  box-shadow: 0 20px 42px rgba(12, 52, 74, 0.14);
+  box-shadow: 0 20px 42px rgba(31, 39, 51, 0.14);
 }
 
 .admin__card > h2 {
@@ -292,9 +292,9 @@ body {
   min-width: 220px;
   padding: 1rem;
   border-radius: 18px;
-  border: 1px solid rgba(10, 92, 79, 0.24);
+  border: 1px solid rgba(31, 39, 51, 0.24);
   background: #ffffff;
-  box-shadow: 0 18px 38px rgba(12, 52, 74, 0.18);
+  box-shadow: 0 18px 38px rgba(31, 39, 51, 0.18);
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -320,7 +320,7 @@ body {
 }
 
 .admin__prompt-popover [data-role='prompt-popover-option'] {
-  border: 1px solid rgba(15, 123, 102, 0.28);
+  border: 1px solid rgba(63, 74, 90, 0.28);
   border-radius: 12px;
   padding: 0.55rem 0.9rem;
   background: #fff;
@@ -332,7 +332,7 @@ body {
 
 .admin__prompt-popover [data-role='prompt-popover-option']:hover:not(:disabled),
 .admin__prompt-popover [data-role='prompt-popover-option']:focus-visible {
-  background: rgba(15, 123, 102, 0.12);
+  background: rgba(63, 74, 90, 0.12);
   border-color: var(--accent-strong);
   outline: none;
 }
@@ -382,7 +382,7 @@ body {
   font: inherit;
   padding: 0.8rem 1.05rem;
   border-radius: 16px;
-  border: 1px solid rgba(10, 92, 79, 0.22);
+  border: 1px solid rgba(31, 39, 51, 0.22);
   background: var(--input-bg);
   transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
   color: var(--text-primary);
@@ -398,7 +398,7 @@ body {
 .admin__field input:focus,
 .admin__field textarea:focus {
   border-color: var(--accent-strong);
-  box-shadow: 0 0 0 4px rgba(15, 123, 102, 0.18);
+  box-shadow: 0 0 0 4px rgba(63, 74, 90, 0.18);
   background: #f5fbff;
   outline: none;
 }
@@ -413,19 +413,19 @@ body {
   font-weight: 600;
   letter-spacing: 0.02em;
   font-size: 0.95rem;
-  box-shadow: 0 8px 20px rgba(10, 92, 79, 0.24);
+  box-shadow: 0 8px 20px rgba(31, 39, 51, 0.24);
   transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
 }
 
 .admin__prompt-button:focus-visible {
-  outline: 3px solid rgba(15, 123, 102, 0.35);
+  outline: 3px solid rgba(63, 74, 90, 0.35);
   outline-offset: 2px;
 }
 
 .admin__prompt-button:hover:not(:disabled),
 .admin__prompt-button:focus-visible {
   transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(10, 92, 79, 0.3);
+  box-shadow: 0 12px 24px rgba(31, 39, 51, 0.3);
 }
 
 .admin__prompt-button:disabled {
@@ -465,7 +465,7 @@ body {
   width: var(--toggle-width);
   height: var(--toggle-height);
   border-radius: 999px;
-  background: rgba(15, 123, 102, 0.3);
+  background: rgba(63, 74, 90, 0.3);
   transition: background 0.2s ease;
   display: inline-flex;
   align-items: center;
@@ -520,8 +520,8 @@ body {
   gap: 0.55rem;
   padding: 0.7rem 1.6rem;
   border-radius: 999px;
-  border: 1px dashed rgba(15, 123, 102, 0.6);
-  background: rgba(15, 123, 102, 0.06);
+  border: 1px dashed rgba(63, 74, 90, 0.6);
+  background: rgba(63, 74, 90, 0.06);
   color: var(--accent-strong);
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -535,22 +535,22 @@ body {
 
 .admin__icon-button:hover,
 .admin__icon-button:focus-visible {
-  background: rgba(15, 123, 102, 0.12);
+  background: rgba(63, 74, 90, 0.12);
   border-color: var(--accent-strong);
   transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(10, 92, 79, 0.22);
+  box-shadow: 0 10px 24px rgba(31, 39, 51, 0.22);
   outline: none;
 }
 
 .admin__icon-button--danger {
-  border-color: rgba(15, 143, 111, 0.7);
-  background: rgba(15, 143, 111, 0.08);
+  border-color: rgba(91, 112, 136, 0.7);
+  background: rgba(91, 112, 136, 0.08);
   color: var(--accent-strong);
 }
 
 .admin__icon-button--danger:hover,
 .admin__icon-button--danger:focus-visible {
-  background: rgba(15, 143, 111, 0.16);
+  background: rgba(91, 112, 136, 0.16);
   border-color: var(--accent-strong);
   color: var(--accent-strong);
 }
@@ -577,7 +577,7 @@ body {
   border: 1px solid var(--border-soft);
   padding: 1.4rem;
   background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 20px 36px rgba(12, 52, 74, 0.14);
+  box-shadow: 0 20px 36px rgba(31, 39, 51, 0.14);
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
@@ -605,7 +605,7 @@ body {
   align-items: center;
   margin-top: 0.5rem;
   padding-top: 1rem;
-  border-top: 1px dashed rgba(10, 92, 79, 0.2);
+  border-top: 1px dashed rgba(31, 39, 51, 0.2);
 }
 
 .admin__question-settings > * {
@@ -654,19 +654,19 @@ body {
   padding: 0.9rem 2.1rem;
   border-radius: 999px;
   cursor: pointer;
-  box-shadow: 0 20px 36px rgba(10, 92, 79, 0.24);
+  box-shadow: 0 20px 36px rgba(31, 39, 51, 0.24);
   transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
 }
 
 .admin__submit:hover {
   transform: translateY(-2px);
-  box-shadow: 0 24px 42px rgba(10, 92, 79, 0.26);
+  box-shadow: 0 24px 42px rgba(31, 39, 51, 0.26);
 }
 
 .admin__submit:active {
   transform: translateY(0);
   filter: brightness(0.96);
-  box-shadow: 0 14px 28px rgba(10, 92, 79, 0.22);
+  box-shadow: 0 14px 28px rgba(31, 39, 51, 0.22);
 }
 
 .admin__floating-submit {
@@ -684,7 +684,7 @@ body {
   pointer-events: auto;
   min-width: 180px;
   border-radius: 999px;
-  box-shadow: 0 28px 48px rgba(10, 92, 79, 0.32);
+  box-shadow: 0 28px 48px rgba(31, 39, 51, 0.32);
 }
 
 .admin__status {
@@ -699,7 +699,7 @@ body {
   line-height: 1.55;
   background: #f3f8fb;
   color: var(--accent-strong);
-  box-shadow: 0 30px 60px rgba(12, 52, 74, 0.2);
+  box-shadow: 0 30px 60px rgba(31, 39, 51, 0.2);
   opacity: 0;
   transition: opacity 0.25s ease, transform 0.25s ease;
   z-index: 1300;
@@ -711,7 +711,7 @@ body {
 }
 
 .admin__status[data-type='success'] {
-  background: rgba(0, 167, 181, 0.16);
+  background: rgba(91, 112, 136, 0.14);
   color: var(--accent-strong);
 }
 
@@ -748,7 +748,7 @@ body {
 
   .admin {
     border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(12, 52, 74, 0.14);
+    box-shadow: 0 20px 40px rgba(31, 39, 51, 0.14);
   }
 
   .admin__fields {
