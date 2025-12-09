@@ -30,6 +30,7 @@ const brandingData = {
   logoDataUrl: '',
   headerImageDataUrl: '',
 }
+let headerImageDirty = false
 
 const TIERS = [
   {
@@ -91,6 +92,27 @@ const DEFAULT_USER_DATA_SETTINGS = {
   spreadsheetUrl: '',
   submitGasUrl: '',
   readGasUrl: '',
+}
+
+const CONFIG_CACHE_KEY = 'oisoya_review_config_cache'
+
+const readCachedConfig = () => {
+  try {
+    const value = window.localStorage.getItem(CONFIG_CACHE_KEY)
+    if (!value) return null
+    return JSON.parse(value)
+  } catch {
+    return null
+  }
+}
+
+const writeCachedConfig = (config) => {
+  if (!config || typeof config !== 'object') return
+  try {
+    window.localStorage.setItem(CONFIG_CACHE_KEY, JSON.stringify(config))
+  } catch {
+    // noop
+  }
 }
 
 let promptGeneratorData = {
@@ -1524,9 +1546,11 @@ const applyBrandingToUI = (value) => {
   setDocumentFavicon(dataUrl)
 }
 
-const applyHeaderImageToUI = (value) => {
+const applyHeaderImageToUI = (value, options = {}) => {
+  const { markDirty = false } = options
   const dataUrl = typeof value === 'string' ? value : ''
   brandingData.headerImageDataUrl = dataUrl
+  headerImageDirty = Boolean(markDirty)
   if (headerImageFields.dataInput) {
     headerImageFields.dataInput.value = dataUrl
   }
@@ -1607,7 +1631,7 @@ const handleHeaderImageFileChange = () => {
   const reader = new FileReader()
   reader.onload = () => {
     if (typeof reader.result === 'string') {
-      applyHeaderImageToUI(reader.result)
+      applyHeaderImageToUI(reader.result, { markDirty: true })
     }
   }
   reader.onerror = () => {
@@ -1620,11 +1644,18 @@ const handleHeaderImageRemove = () => {
   if (headerImageFields.fileInput) {
     headerImageFields.fileInput.value = ''
   }
-  applyHeaderImageToUI('')
+  applyHeaderImageToUI('', { markDirty: true })
 }
 
-const getHeaderImageValue = () =>
-  brandingData.headerImageDataUrl || headerImageFields.dataInput?.value?.trim() || ''
+const getHeaderImageValue = () => {
+  const currentValue =
+    brandingData.headerImageDataUrl || headerImageFields.dataInput?.value?.trim() || ''
+  if (currentValue) return currentValue
+  if (!headerImageDirty && loadedConfig?.branding?.headerImageDataUrl) {
+    return loadedConfig.branding.headerImageDataUrl
+  }
+  return ''
+}
 
 const setTabMenuState = (isOpen) => {
   if (!tabMenu || !tabMenuTrigger) return
@@ -2014,6 +2045,7 @@ const loadConfig = async () => {
       throw new Error('設定の取得に失敗しました。ネットワーク状況をご確認ください。')
     }
     const payload = await response.json()
+    writeCachedConfig(payload)
     populateForm(payload)
     setStatus('最新の設定を読み込みました。', 'success')
   } catch (error) {
@@ -2039,6 +2071,7 @@ const refreshLoadedConfigSilently = async () => {
     if (payload && typeof payload === 'object') {
       loadedConfig = payload
       updatePromptGeneratorDataCache(payload.promptGenerator || DEFAULT_PROMPT_GENERATOR)
+      writeCachedConfig(payload)
     }
     return payload
   } catch (error) {
@@ -2311,6 +2344,7 @@ form.addEventListener('submit', async (event) => {
       loadedConfig = fallbackConfig
       populateForm(fallbackConfig)
     }
+    writeCachedConfig(loadedConfig)
 
     let userProfileSyncResult = { status: 'skipped' }
     if (isUserApp && hasUserDataSyncConfig()) {
