@@ -4,7 +4,6 @@ const CONFIG_KEY = 'router-config'
 
 export const config = {
   blobs: true,
-  path: '/.netlify/functions/user-data-submit',
 }
 
 const corsHeaders = {

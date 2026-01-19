@@ -4,7 +4,6 @@ const CONFIG_KEY = 'router-config'
 
 export const config = {
   blobs: true,
-  path: '/.netlify/functions/config',
 }
 
 const sanitizeString = (value) => (typeof value === 'string' ? value.trim() : '')
