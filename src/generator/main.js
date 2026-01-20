@@ -61,7 +61,7 @@ const setDocumentFavicon = (dataUrl) => {
 
 const app = document.querySelector('#generator-app')
 if (!app) {
-  throw new Error('#generator-app が見つかりません。')
+  throw new Error('#generator-app not found.')
 }
 
 const generateButton = app.querySelector('[data-role="generate"]')
@@ -76,6 +76,41 @@ const brandElements = {
 }
 const promptKey = app.dataset.promptKey || 'page1'
 const tierKey = app.dataset.tier || ''
+
+const LANG = promptKey === 'page2' ? 'en' : 'ja'
+
+const MESSAGES = {
+  ja: {
+    appNotFound: '#generator-app が見つかりません。',
+    initFailed: '口コミ生成画面の初期化に失敗しました。',
+    generating: '口コミを生成しています…',
+    buttonGenerating: '生成中…',
+    buttonDefault: '口コミ生成',
+    generateFailed: '口コミ生成に失敗しました。時間をおいて再度お試しください。',
+    resultEmpty: '生成結果が空でした。設定を確認してください。',
+    generateSuccess: '口コミを生成しました。',
+    noTextToCopy: 'コピーする文章がありません。先に口コミを生成してください。',
+    copySuccess: 'クリップボードにコピーしました。',
+    copyFailed: 'コピーに失敗しました。手動で選択してコピーしてください。',
+    reloaded: 'ページを再読み込みしました。',
+  },
+  en: {
+    appNotFound: '#generator-app not found.',
+    initFailed: 'Failed to initialize the generator.',
+    generating: 'Generating review...',
+    buttonGenerating: 'Generating...',
+    buttonDefault: 'Generate Review',
+    generateFailed: 'Failed to generate review. Please try again later.',
+    resultEmpty: 'Generation result was empty. Please check settings.',
+    generateSuccess: 'Review generated.',
+    noTextToCopy: 'No text to copy. Please generate a review first.',
+    copySuccess: 'Copied to clipboard.',
+    copyFailed: 'Failed to copy. Please copy manually.',
+    reloaded: 'Page reloaded.',
+  },
+}
+
+const t = (key) => MESSAGES[LANG][key] || MESSAGES.ja[key]
 
 const getFormKeyForPage = () => FORM_KEY_BY_PROMPT[promptKey] || 'form1'
 
@@ -107,7 +142,7 @@ const readLatestSubmissionInfo = () => {
 }
 
 if (!generateButton || !copyButton || !textarea || !statusEl || !mapsLinkEl) {
-  throw new Error('口コミ生成画面の初期化に失敗しました。')
+  throw new Error(t('initFailed'))
 }
 
 const setStatus = (message, type = 'info') => {
@@ -167,15 +202,15 @@ applyBrandingLogo(currentConfig.branding)
 const toggleLoading = (isLoading) => {
   if (isLoading) {
     generateButton.setAttribute('disabled', '')
-    generateButton.textContent = '生成中…'
+    generateButton.textContent = t('buttonGenerating')
   } else {
     generateButton.removeAttribute('disabled')
-    generateButton.textContent = '口コミ生成'
+    generateButton.textContent = t('buttonDefault')
   }
 }
 
 const handleGenerate = async () => {
-  setStatus('口コミを生成しています…')
+  setStatus(t('generating'))
   toggleLoading(true)
 
   try {
@@ -201,14 +236,14 @@ const handleGenerate = async () => {
       const payload = await response.json().catch(() => ({}))
       const message =
         payload?.message ||
-        '口コミ生成に失敗しました。時間をおいて再度お試しください。'
+        t('generateFailed')
       throw new Error(message)
     }
 
     const payload = await response.json()
     const text = payload?.text?.trim()
     if (!text) {
-      throw new Error('生成結果が空でした。設定を確認してください。')
+      throw new Error(t('resultEmpty'))
     }
 
     textarea.value = text
@@ -230,7 +265,7 @@ const handleGenerate = async () => {
 
     writeCachedConfig(currentConfig)
 
-    setStatus('口コミを生成しました。', 'success')
+    setStatus(t('generateSuccess'), 'success')
   } catch (error) {
     console.error(error)
     setStatus(error.message, 'error')
@@ -246,16 +281,16 @@ generateButton.addEventListener('click', () => {
 copyButton.addEventListener('click', async () => {
   const text = textarea.value.trim()
   if (!text) {
-    setStatus('コピーする文章がありません。先に口コミを生成してください。', 'warn')
+    setStatus(t('noTextToCopy'), 'warn')
     return
   }
 
   try {
     await navigator.clipboard.writeText(text)
-    setStatus('クリップボードにコピーしました。', 'success')
+    setStatus(t('copySuccess'), 'success')
   } catch (error) {
     console.error(error)
-    setStatus('コピーに失敗しました。手動で選択してコピーしてください。', 'error')
+    setStatus(t('copyFailed'), 'error')
   }
 })
 
@@ -269,6 +304,6 @@ window.addEventListener('pageshow', (event) => {
       }
       applyBrandingLogo(latest.branding)
     }
-    setStatus('ページを再読み込みしました。', 'info')
+    setStatus(t('reloaded'), 'info')
   }
 })

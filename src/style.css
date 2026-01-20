@@ -199,7 +199,7 @@ body::before {
 .router__heading {
   margin: 0;
   font-family: var(--font-accent);
-  font-size: clamp(2rem, 6vw, 2.9rem);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
   letter-spacing: 0.02em;
   line-height: 1.2;
   color: var(--text-strong);
@@ -207,7 +207,7 @@ body::before {
 
 .router__lead {
   margin: 0;
-  font-size: clamp(1rem, 4vw, 1.1rem);
+  font-size: clamp(0.85rem, 3.5vw, 0.95rem);
   line-height: 1.9;
   color: var(--text-muted);
 }

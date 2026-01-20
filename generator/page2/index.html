@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -10,7 +10,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="../../src/generator/style.css" />
-  <title>生成ページ2 - ISHIGAKIJIMA ACTIVITYCLUB</title>
+  <title>Review Generator - ISHIGAKIJIMA ACTIVITYCLUB</title>
 </head>
 
 <body>
@@ -18,29 +18,30 @@
     <main class="generator">
       <header class="generator__header">
         <p class="generator__brand" data-role="brand">
-          <img class="generator__brand-logo" data-role="brand-logo" alt="ISHIGAKIJIMA ACTIVITYCLUB ロゴ" hidden />
+          <img class="generator__brand-logo" data-role="brand-logo" alt="ISHIGAKIJIMA ACTIVITYCLUB Logo" hidden />
           <span data-role="brand-text">ISHIGAKIJIMA ACTIVITYCLUB</span>
         </p>
-        <p class="generator__page-tag">生成ページ</p>
-        <h1 class="generator__title">ご協力ありがとうございました</h1>
+        <p class="generator__page-tag">Generator Page</p>
+        <h1 class="generator__title">Thank you for your cooperation</h1>
         <p class="generator__lead">
-          「口コミ生成」ボタンを押すと、アンケート結果を元にAIが文章を作成します。内容をご確認のうえ、コピペして投稿お願いします。
+          Click the "Generate Review" button to create a review based on your survey results using AI. Please check the
+          content, copy it, and post it.
         </p>
       </header>
       <section class="generator__controls">
-        <button type="button" class="generator__button" data-role="generate">口コミ生成</button>
-        <p class="generator__hint">生成には数秒かかる場合があります。</p>
+        <button type="button" class="generator__button" data-role="generate">Generate Review</button>
+        <p class="generator__hint">Generation may take a few seconds.</p>
       </section>
       <section class="generator__output">
-        <label class="generator__output-label" for="generated-text">生成された口コミ文章</label>
+        <label class="generator__output-label" for="generated-text">Generated Review</label>
         <textarea id="generated-text" class="generator__textarea" readonly></textarea>
       </section>
       <section class="generator__actions">
-        <button type="button" class="generator__action-button" data-role="copy">コピー</button>
+        <button type="button" class="generator__action-button" data-role="copy">Copy</button>
         <span class="generator__link-wrapper">
-          <span>口コミの投稿は </span>
-          <a href="#" target="_blank" rel="noopener noreferrer" data-role="maps-link">こちら</a>
-          <span> からお願いします。</span>
+          <span>Please post your review </span>
+          <a href="#" target="_blank" rel="noopener noreferrer" data-role="maps-link">here</a>
+          <span>.</span>
         </span>
       </section>
       <p class="generator__status" data-role="status" hidden></p>

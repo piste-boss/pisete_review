@@ -104,7 +104,7 @@ const DEFAULT_SURVEY_RESULTS = {
 
 const app = document.querySelector('#form2-app')
 if (!app) {
-  throw new Error('#form2-app が見つかりません。')
+  throw new Error('#form2-app not found.')
 }
 
 const FORM_KEY = app.dataset.formKey || 'form2'
@@ -261,19 +261,19 @@ const normalizeQuestions = (questions = []) => {
 
 const describeQuestion = (question) => {
   if (question.type === 'checkbox') {
-    if (question.allowMultiple) return '該当する項目をすべて選択してください。'
-    return 'もっとも当てはまる項目を1つ選択してください。'
+    if (question.allowMultiple) return 'Please select all applicable items.'
+    return 'Please select the most applicable item.'
   }
   if (question.type === 'rating') {
     if (question.ratingStyle === 'numbers') {
-      return '1〜5の数字から今回の評価を選択してください。'
+      return 'Please select a rating from 1 to 5.'
     }
-    return '星マークをタップして今回の評価を選択してください。'
+    return 'Tap a star to select your rating.'
   }
   if (question.type === 'text') {
-    return '自由入力欄です。感じたことをそのままご記入ください。'
+    return 'This is a free text field. Please write whatever you feel.'
   }
-  return 'プルダウンから1つ選択してください。'
+  return 'Please select one from the dropdown.'
 }
 
 const buildDropdown = (question, statusNode) => {
@@ -283,7 +283,7 @@ const buildDropdown = (question, statusNode) => {
 
   const placeholder = document.createElement('option')
   placeholder.value = ''
-  placeholder.textContent = '選択してください'
+  placeholder.textContent = 'Please select'
   select.appendChild(placeholder)
 
   question.options.forEach((option) => {
@@ -340,7 +340,7 @@ const buildTextInput = (question, statusNode) => {
   const textarea = document.createElement('textarea')
   textarea.className = 'form2__textarea'
   textarea.rows = 4
-  textarea.placeholder = question.placeholder || '自由にご記入ください。'
+  textarea.placeholder = question.placeholder || 'Please enter your response.'
   textarea.dataset.questionControl = question.id
   textarea.addEventListener('input', () => {
     if ((textarea.value || '').trim()) {
@@ -366,9 +366,9 @@ const buildRatingControls = ({ mode = 'stars' } = {}) => {
   const guides = document.createElement('div')
   guides.className = 'form2__rating-guides'
   const lowGuide = document.createElement('span')
-  lowGuide.textContent = mode === 'numbers' ? '1（低い）' : '低い'
+  lowGuide.textContent = mode === 'numbers' ? '1 (Low)' : 'Low'
   const highGuide = document.createElement('span')
-  highGuide.textContent = mode === 'numbers' ? '5（高い）' : '高い'
+  highGuide.textContent = mode === 'numbers' ? '5 (High)' : 'High'
   guides.append(lowGuide, highGuide)
   container.appendChild(guides)
 
@@ -381,7 +381,7 @@ const buildRatingControls = ({ mode = 'stars' } = {}) => {
     button.type = 'button'
     button.className = 'form2__rating-button'
     button.dataset.score = String(score)
-    button.setAttribute('aria-label', `${score}点`)
+    button.setAttribute('aria-label', `${score} points`)
     if (mode === 'numbers') {
       button.classList.add('form2__rating-button--number')
       button.textContent = String(score)
@@ -417,7 +417,7 @@ const renderQuestions = () => {
 
     const badge = document.createElement('span')
     badge.className = 'form2__badge'
-    badge.textContent = question.required ? '必須' : '任意'
+    badge.textContent = question.required ? 'Required' : 'Optional'
     heading.appendChild(badge)
     questionCard.appendChild(heading)
 
@@ -554,7 +554,7 @@ const loadConfig = async () => {
   try {
     const response = await fetch('/.netlify/functions/config')
     if (!response.ok) {
-      throw new Error('フォーム設定の取得に失敗しました。')
+      throw new Error('Failed to fetch from configuration.')
     }
     const payload = await response.json()
     writeCachedConfig(payload)
@@ -595,13 +595,13 @@ const collectAnswers = () => {
       value = ref.selectEl?.value || ''
       if (ref.required && !value) {
         errors.push(questionId)
-        setQuestionError(ref.statusEl, '選択してください。')
+        setQuestionError(ref.statusEl, 'Please select an option.')
       }
     } else if (ref.type === 'checkbox') {
       const selected = ref.inputs.filter((input) => input.checked).map((input) => input.value)
       if (ref.required && selected.length === 0) {
         errors.push(questionId)
-        setQuestionError(ref.statusEl, '該当する項目を選択してください。')
+        setQuestionError(ref.statusEl, 'Please select applicable items.')
       }
       if (!ref.allowMultiple && selected.length > 1) {
         selected.splice(1)
@@ -611,14 +611,14 @@ const collectAnswers = () => {
       const score = ref.rating?.currentScore ?? 0
       if (ref.required && !score) {
         errors.push(questionId)
-        setQuestionError(ref.statusEl, '評価を選択してください。')
+        setQuestionError(ref.statusEl, 'Please select a rating.')
       }
       value = score
     } else {
       const textValue = (ref.textEl?.value || '').trim()
       if (ref.required && !textValue) {
         errors.push(questionId)
-        setQuestionError(ref.statusEl, '入力してください。')
+        setQuestionError(ref.statusEl, 'Please enter a value.')
       }
       value = textValue
     }
@@ -696,7 +696,7 @@ const sendSurveyResults = async (answers, answersOrdered, submittedAt, responseI
     } catch {
       // noop
     }
-    const errorMessage = details || `アンケート送信に失敗しました (status ${response.status}).`
+    const errorMessage = details || `Failed to submit survey (status ${response.status}).`
     throw new Error(errorMessage)
   }
 
@@ -735,7 +735,7 @@ submitButton?.addEventListener('click', async () => {
   if (isSubmitting) return
   const { errors, answers, answersOrdered } = collectAnswers()
   if (errors.length > 0) {
-    setStatus('未回答の必須項目があります。', 'error')
+    setStatus('There are unanswered required fields.', 'error')
     return
   }
 
@@ -747,7 +747,7 @@ submitButton?.addEventListener('click', async () => {
 
   try {
     if (hasEndpoint) {
-      setStatus('アンケート結果を送信しています…')
+      setStatus('Sending survey results...')
       await sendSurveyResults(answers, answersOrdered, submissionTimestamp, responseId)
     }
     setStatus('')
@@ -757,7 +757,7 @@ submitButton?.addEventListener('click', async () => {
     redirectToGenerator(submissionTimestamp, responseId)
   } catch (error) {
     console.error(error)
-    setStatus(error.message || '回答の送信に失敗しました。時間をおいて再度お試しください。', 'error')
+    setStatus(error.message || 'Failed to submit answers. Please try again later.', 'error')
   } finally {
     isSubmitting = false
     submitButton.disabled = false
