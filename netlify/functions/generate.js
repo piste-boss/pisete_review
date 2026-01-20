@@ -45,14 +45,14 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 
-const jsonResponse = (statusCode, payload = {}) => ({
-  statusCode,
-  headers: {
-    'Content-Type': 'application/json',
-    ...corsHeaders,
-  },
-  body: JSON.stringify(payload),
-})
+const jsonResponse = (statusCode, payload = {}) =>
+  new Response(JSON.stringify(payload), {
+    status: statusCode,
+    headers: {
+      'Content-Type': 'application/json',
+      ...corsHeaders,
+    },
+  })
 
 const sanitizeString = (value) => (typeof value === 'string' ? value.trim() : '')
 
@@ -62,17 +62,17 @@ const buildPrompt = (prompt, dataSamples) => {
 
   const formattedSamples = Array.isArray(dataSamples)
     ? dataSamples
-        .map((item, index) => {
-          if (typeof item === 'string') return `- サンプル${index + 1}: ${item}`
-          if (item && typeof item === 'object') {
-            return `- サンプル${index + 1}: ${Object.values(item)
-              .filter((value) => value)
-              .join(' / ')}`
-          }
-          return null
-        })
-        .filter(Boolean)
-        .join('\n')
+      .map((item, index) => {
+        if (typeof item === 'string') return `- サンプル${index + 1}: ${item}`
+        if (item && typeof item === 'object') {
+          return `- サンプル${index + 1}: ${Object.values(item)
+            .filter((value) => value)
+            .join(' / ')}`
+        }
+        return null
+      })
+      .filter(Boolean)
+      .join('\n')
     : ''
 
   return `${basePrompt}\n\n参考データ:\n${formattedSamples}`
@@ -182,25 +182,23 @@ export const config = {
   blobs: true,
 }
 
-export const handler = async (event, context) => {
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
+export default async (req, context) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
       headers: corsHeaders,
-    }
+    })
   }
 
-  if (event.httpMethod !== 'POST') {
+  if (req.method !== 'POST') {
     return jsonResponse(405, { message: 'POSTメソッドのみ利用できます。' })
   }
 
   let requestPayload = {}
-  if (event.body) {
-    try {
-      requestPayload = JSON.parse(event.body)
-    } catch {
-      return jsonResponse(400, { message: 'JSON形式が正しくありません。' })
-    }
+  try {
+    requestPayload = await req.json()
+  } catch {
+    return jsonResponse(400, { message: 'JSON形式が正しくありません。' })
   }
 
   const tierInput = sanitizeString(requestPayload.tier)
@@ -269,7 +267,8 @@ export const handler = async (event, context) => {
     return jsonResponse(500, { message: 'GASアプリからデータを取得できませんでした。' })
   }
 
-  const requestModel = sanitizeString(event?.queryStringParameters?.model) || sanitizeString(aiSettings.model)
+  const requestIdModel = new URL(req.url).searchParams.get('model')
+  const requestModel = sanitizeString(requestIdModel) || sanitizeString(aiSettings.model)
   const model = requestModel || DEFAULT_MODEL
   const geminiEndpoint = `https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${encodeURIComponent(geminiApiKey)}`
 

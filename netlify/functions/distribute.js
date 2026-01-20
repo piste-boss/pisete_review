@@ -62,14 +62,14 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 
-const jsonResponse = (statusCode, payload = {}) => ({
-  statusCode,
-  headers: {
-    'Content-Type': 'application/json',
-    ...corsHeaders,
-  },
-  body: JSON.stringify(payload),
-})
+const jsonResponse = (statusCode, payload = {}) =>
+  new Response(JSON.stringify(payload), {
+    status: statusCode,
+    headers: {
+      'Content-Type': 'application/json',
+      ...corsHeaders,
+    },
+  })
 
 const mergePrompts = (incoming = {}, fallback = DEFAULT_PROMPTS) =>
   Object.entries(DEFAULT_PROMPTS).reduce((acc, [key, defaults]) => {
@@ -163,29 +163,29 @@ const persistConfig = async (store, config) => {
   })
 }
 
-export const handler = async (event, context) => {
+export default async (req, context) => {
   const store = getConfigStore(context)
 
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
       headers: corsHeaders,
-    }
+    })
   }
 
-  if (event.httpMethod !== 'POST') {
+  if (req.method !== 'POST') {
     return jsonResponse(405, { message: 'POSTメソッドのみ利用できます。' })
-  }
-
-  if (!event.body) {
-    return jsonResponse(400, { message: 'リクエストボディが空です。' })
   }
 
   let payload
   try {
-    payload = JSON.parse(event.body)
+    payload = await req.json()
   } catch {
     return jsonResponse(400, { message: 'JSON形式が正しくありません。' })
+  }
+
+  if (!payload) {
+    return jsonResponse(400, { message: 'リクエストボディが空です。' })
   }
 
   const tierKey = String(payload?.tier || '').toLowerCase()

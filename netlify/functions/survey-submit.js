@@ -13,14 +13,14 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type,Authorization',
 }
 
-const jsonResponse = (statusCode, payload = {}) => ({
-  statusCode,
-  headers: {
-    'Content-Type': 'application/json',
-    ...corsHeaders,
-  },
-  body: JSON.stringify(payload),
-})
+const jsonResponse = (statusCode, payload = {}) =>
+  new Response(JSON.stringify(payload), {
+    status: statusCode,
+    headers: {
+      'Content-Type': 'application/json',
+      ...corsHeaders,
+    },
+  })
 
 const getSurveyConfig = async (context) => {
   const store = getConfigStore(context)
@@ -34,21 +34,21 @@ const getSurveyConfig = async (context) => {
   }
 }
 
-export const handler = async (event, context) => {
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
+export default async (req, context) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
       headers: corsHeaders,
-    }
+    })
   }
 
-  if (event.httpMethod !== 'POST') {
+  if (req.method !== 'POST') {
     return jsonResponse(405, { message: 'Method Not Allowed' })
   }
 
   let payload
   try {
-    payload = JSON.parse(event.body)
+    payload = await req.json()
   } catch {
     return jsonResponse(400, { message: 'Invalid JSON payload.' })
   }

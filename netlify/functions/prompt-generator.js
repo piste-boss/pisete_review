@@ -18,14 +18,14 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'Content-Type',
 }
 
-const jsonResponse = (statusCode, payload = {}) => ({
-  statusCode,
-  headers: {
-    'Content-Type': 'application/json',
-    ...corsHeaders,
-  },
-  body: JSON.stringify(payload),
-})
+const jsonResponse = (statusCode, payload = {}) =>
+  new Response(JSON.stringify(payload), {
+    status: statusCode,
+    headers: {
+      'Content-Type': 'application/json',
+      ...corsHeaders,
+    },
+  })
 
 const sanitizeString = (value) => (typeof value === 'string' ? value.trim() : '')
 
@@ -311,25 +311,23 @@ export const config = {
   blobs: true,
 }
 
-export const handler = async (event, context) => {
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
+export default async (req, context) => {
+  if (req.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
       headers: corsHeaders,
-    }
+    })
   }
 
-  if (event.httpMethod !== 'POST') {
+  if (req.method !== 'POST') {
     return jsonResponse(405, { message: 'POSTメソッドのみ利用できます。' })
   }
 
   let payload = {}
-  if (event.body) {
-    try {
-      payload = JSON.parse(event.body)
-    } catch {
-      return jsonResponse(400, { message: 'JSON形式が正しくありません。' })
-    }
+  try {
+    payload = await req.json()
+  } catch {
+    return jsonResponse(400, { message: 'JSON形式が正しくありません。' })
   }
 
   const requestedTier = sanitizeString(payload.tier).toLowerCase()
