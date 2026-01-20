@@ -506,8 +506,15 @@ export default async (req, context) => {
   }
 
   if (req.method === 'POST') {
-    const storedConfig = await store.get(CONFIG_KEY, { type: 'json' }).catch(() => null)
+    console.log('--- Config POST Start ---')
+    const storedConfig = await store.get(CONFIG_KEY, { type: 'json' }).catch((err) => {
+      console.error('Store read error:', err)
+      return null
+    })
+    console.log('Stored Config:', storedConfig ? 'Found' : 'Not Found', storedConfig ? Object.keys(storedConfig) : '')
+
     const existingConfig = mergeWithDefault(storedConfig || DEFAULT_CONFIG)
+    console.log('Existing Config (Gemini):', existingConfig.aiSettings?.geminiApiKey ? 'Set' : 'Empty')
 
     let payload
     try {
@@ -520,17 +527,20 @@ export default async (req, context) => {
       return jsonResponse(400, { message: 'リクエストボディが空です。' })
     }
 
-    if (!payload || typeof payload !== 'object') {
-      return jsonResponse(400, { message: '設定が見つかりません。' })
-    }
-
     const newConfig = mergeWithDefault(payload, existingConfig)
 
     const incomingKey = sanitizeSecretInput(payload.aiSettings?.geminiApiKey)
-    newConfig.aiSettings.geminiApiKey = incomingKey || existingConfig.aiSettings.geminiApiKey || ''
     const incomingPromptGeneratorKey = sanitizeSecretInput(payload.promptGenerator?.geminiApi)
+
+    console.log('Incoming Payload Gemini:', payload.aiSettings?.geminiApiKey)
+    console.log('Incoming Key (Sanitized):', incomingKey)
+
+    newConfig.aiSettings.geminiApiKey = incomingKey || existingConfig.aiSettings.geminiApiKey || ''
     newConfig.promptGenerator.geminiApi =
       incomingPromptGeneratorKey || existingConfig.promptGenerator?.geminiApi || ''
+
+    console.log('Final Gemini Key to Save:', newConfig.aiSettings.geminiApiKey ? 'Set' : 'Empty')
+
     const timestamp = new Date().toISOString()
     newConfig.updatedAt = timestamp
 
