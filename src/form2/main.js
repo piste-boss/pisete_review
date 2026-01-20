@@ -33,16 +33,16 @@ const DEFAULT_FORMS = {
     ],
   },
   form2: {
-    title: '体験に関するアンケートにご協力ください',
-    description: '該当する項目を選択してください。複数回答可の設問はチェックマークで選べます。',
+    title: 'Please help us with a quick survey about your experience',
+    description: 'Select the options that apply. You can check multiple boxes for some questions.',
     questions: [
       {
         id: 'form2-q1',
-        title: '今回のご利用目的を教えてください',
+        title: 'What was the purpose of your visit?',
         required: true,
         type: 'dropdown',
         allowMultiple: false,
-        options: ['ビジネス', '観光', '記念日', 'その他'],
+        options: ['Business', 'Tourism', 'Anniversary', 'Other'],
         ratingEnabled: false,
         placeholder: '',
         ratingStyle: 'stars',
@@ -50,11 +50,11 @@ const DEFAULT_FORMS = {
       },
       {
         id: 'form2-q2',
-        title: '特に満足したポイントを教えてください',
+        title: 'What were you particularly satisfied with?',
         required: false,
         type: 'checkbox',
         allowMultiple: true,
-        options: ['スタッフの接客', '施設の清潔さ', 'コストパフォーマンス', '立地アクセス'],
+        options: ['Staff Service', 'Cleanliness', 'Value for Money', 'Location/Access'],
         ratingEnabled: false,
         placeholder: '',
         ratingStyle: 'stars',
@@ -726,9 +726,8 @@ const redirectToGenerator = (submittedAt, responseId) => {
     const separator = basePath.includes('?') ? '&' : '?'
     window.location.href = `${basePath}${separator}submittedAt=${encodeURIComponent(
       submittedAt,
-    )}&formKey=${encodeURIComponent(FORM_KEY)}${
-      responseId ? `&responseId=${encodeURIComponent(responseId)}` : ''
-    }`
+    )}&formKey=${encodeURIComponent(FORM_KEY)}${responseId ? `&responseId=${encodeURIComponent(responseId)}` : ''
+      }`
   }
 }
 

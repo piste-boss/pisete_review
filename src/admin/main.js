@@ -175,16 +175,16 @@ const DEFAULT_FORM1 = {
 }
 
 const DEFAULT_FORM2 = {
-  title: '体験に関するアンケートにご協力ください',
-  description: '該当する項目を選択してください。複数回答可の設問はチェックマークで選べます。',
+  title: 'Please help us with a quick survey about your experience',
+  description: 'Select the options that apply. You can check multiple boxes for some questions.',
   questions: [
     {
       id: 'form2-q1',
-      title: '今回のご利用目的を教えてください',
+      title: 'What was the purpose of your visit?',
       required: true,
       type: 'dropdown',
       allowMultiple: false,
-      options: ['ビジネス', '観光', '記念日', 'その他'],
+      options: ['Business', 'Tourism', 'Anniversary', 'Other'],
       ratingEnabled: false,
       placeholder: '',
       ratingStyle: 'stars',
@@ -192,11 +192,11 @@ const DEFAULT_FORM2 = {
     },
     {
       id: 'form2-q2',
-      title: '特に満足したポイントを教えてください',
+      title: 'What were you particularly satisfied with?',
       required: false,
       type: 'checkbox',
       allowMultiple: true,
-      options: ['スタッフの接客', '施設の清潔さ', 'コストパフォーマンス', '立地アクセス'],
+      options: ['Staff Service', 'Cleanliness', 'Value for Money', 'Location/Access'],
       ratingEnabled: false,
       placeholder: '',
       ratingStyle: 'stars',
@@ -392,8 +392,8 @@ const updatePromptGeneratorDataCache = (config = {}) => {
   const normalized = {
     hasGeminiApi: Boolean(
       config.hasGeminiApi ||
-        config.hasPromptGeneratorGeminiApi ||
-        (typeof config.geminiApi === 'string' && config.geminiApi.length > 0),
+      config.hasPromptGeneratorGeminiApi ||
+      (typeof config.geminiApi === 'string' && config.geminiApi.length > 0),
     ),
     prompt: typeof config.prompt === 'string' ? config.prompt : '',
     references: {
@@ -638,18 +638,18 @@ const updateAdminPasswordVisibility = () => {
 const hasUserProfileInputs = () =>
   Boolean(
     userProfileFields.storeName ||
-      userProfileFields.storeKana ||
-      userProfileFields.industry ||
-      userProfileFields.customers ||
-      userProfileFields.strengths ||
-      userProfileFields.keywords.some(Boolean) ||
-      userProfileFields.excludeWords.some(Boolean) ||
-      userProfileFields.nearStation ||
-      (userProfileFields.admin &&
-        (userProfileFields.admin.name ||
-          userProfileFields.admin.email ||
-          userProfileFields.admin.password ||
-          userProfileFields.admin.passwordConfirm)),
+    userProfileFields.storeKana ||
+    userProfileFields.industry ||
+    userProfileFields.customers ||
+    userProfileFields.strengths ||
+    userProfileFields.keywords.some(Boolean) ||
+    userProfileFields.excludeWords.some(Boolean) ||
+    userProfileFields.nearStation ||
+    (userProfileFields.admin &&
+      (userProfileFields.admin.name ||
+        userProfileFields.admin.email ||
+        userProfileFields.admin.password ||
+        userProfileFields.admin.passwordConfirm)),
   )
 
 const setUserProfileValues = (profile = {}) => {
@@ -1760,10 +1760,10 @@ const initializeQrControls = () => {
     })
   }
 
-  ;['page', 'size', 'format'].forEach((key) => {
-    const control = qrControls[key]
-    control?.addEventListener('change', refresh)
-  })
+    ;['page', 'size', 'format'].forEach((key) => {
+      const control = qrControls[key]
+      control?.addEventListener('change', refresh)
+    })
 
   if (qrControls.refreshButton) {
     qrControls.refreshButton.addEventListener('click', refresh)
@@ -2123,9 +2123,9 @@ form.addEventListener('submit', async (event) => {
     },
     userDataSettings: canEditUserDataSettings
       ? {
-          ...DEFAULT_USER_DATA_SETTINGS,
-          ...existingUserDataSettings,
-        }
+        ...DEFAULT_USER_DATA_SETTINGS,
+        ...existingUserDataSettings,
+      }
       : undefined,
     userProfile: { ...(loadedConfig?.userProfile || {}) },
     promptGenerator: { ...(loadedConfig?.promptGenerator || DEFAULT_PROMPT_GENERATOR) },
