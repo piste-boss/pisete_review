@@ -1,5 +1,16 @@
-[Error] Failed to load resource: the server responded with a status of 400 () (prompt-generator, line 0)
-[Error] Prompt generator error:
-Error: プロンプトジェネレーターのGemini APIキーが設定されていません。
-（anonymous関数） — main-C3M1X1FU.js:10:5398
-	（anonymous関数） (main-C3M1X1FU.js:10:5599)
+document.addEventListener('DOMContentLoaded', () => {
+	const beginnerBtn = document.querySelector('[data-tier="beginner"]')
+	const intermediateBtn = document.querySelector('[data-tier="intermediate"]')
+
+	if (beginnerBtn) {
+		beginnerBtn.addEventListener('click', () => {
+			window.location.assign('./form1/')
+		})
+	}
+
+	if (intermediateBtn) {
+		intermediateBtn.addEventListener('click', () => {
+			window.location.assign('./form2/')
+		})
+	}
+})
