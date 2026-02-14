@@ -33,16 +33,16 @@ const DEFAULT_FORMS = {
     ],
   },
   form2: {
-    title: 'Please help us with a quick survey about your experience',
-    description: 'Select the options that apply. You can check multiple boxes for some questions.',
+    title: 'ご利用アンケートにご協力ください',
+    description: '該当する項目を選択してください。複数選択可能な質問もあります。',
     questions: [
       {
         id: 'form2-q1',
-        title: 'What was the purpose of your visit?',
+        title: '今回の満足度を教えてください',
         required: true,
-        type: 'dropdown',
+        type: 'rating',
         allowMultiple: false,
-        options: ['Business', 'Tourism', 'Anniversary', 'Other'],
+        options: [],
         ratingEnabled: false,
         placeholder: '',
         ratingStyle: 'stars',
@@ -50,13 +50,13 @@ const DEFAULT_FORMS = {
       },
       {
         id: 'form2-q2',
-        title: 'What were you particularly satisfied with?',
+        title: '良かった点や印象に残ったことを教えてください',
         required: false,
-        type: 'checkbox',
-        allowMultiple: true,
-        options: ['Staff Service', 'Cleanliness', 'Value for Money', 'Location/Access'],
+        type: 'text',
+        allowMultiple: false,
+        options: [],
         ratingEnabled: false,
-        placeholder: '',
+        placeholder: '例：スタッフの対応、雰囲気、味など',
         ratingStyle: 'stars',
         includeInReview: true,
       },
@@ -161,7 +161,7 @@ const UI_STRINGS = {
   }
 }
 
-const LANG_MAP = { form1: 'ja', form2: 'en', form3: 'ja' }
+const LANG_MAP = { form1: 'ja', form2: 'ja', form3: 'ja' }
 const CURRENT_LANG = LANG_MAP[FORM_KEY] || 'en'
 const t = (key) => UI_STRINGS[CURRENT_LANG]?.[key] || UI_STRINGS.en[key]
 

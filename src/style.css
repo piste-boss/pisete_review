@@ -1,34 +1,28 @@
 :root {
-  --font-base: 'Zen Kaku Gothic New', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', system-ui,
-    -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-accent: 'Outfit', 'Zen Kaku Gothic New', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-base: 'Arial', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
   color-scheme: only light;
   font-family: var(--font-base);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Tropical Resort Palette */
-  --bg: #FDF6E3;
-  /* Sand / Cream */
+  /* Piste Palette */
+  --bg: #ffffff;
+  --bg-alt: #f5f5f5;
   --card: #ffffff;
-  --brand-pink: #00A86B;
-  /* Emerald Green (Primary) - was dark blue */
-  --brand-pink-strong: #1A4C43;
-  /* Deep Tropical Green - was dark gray */
-  --brand-pink-soft: #E6E6E6;
-  /* Light Gray - was Soft Teal */
-  --brand-teal: #0077BE;
-  /* Ocean Blue - was teal-gray */
-  --brand-light-blue: #81D4FA;
-  /* Pastel Light Blue */
-  --text-strong: #143D36;
-  /* Deep Forest Green - was dark text */
-  --text-muted: #4A665A;
-  /* Muted Green/Gray - was muted text */
-  --badge: #F2F2F2;
-  --shadow: 0 30px 60px rgba(0, 119, 190, 0.12);
-  /* Softer ocean shadow */
+  --brand-primary: #8dc21f;
+  /* Lime Green */
+  --brand-primary-strong: #6a9a18;
+  /* Dark Lime Green */
+  --brand-primary-soft: #e8f5d4;
+  /* Light Lime Green */
+  --text-strong: #333333;
+  /* Dark Gray */
+  --text-muted: #666666;
+  /* Medium Gray */
+  --text-black: #000000;
+  --badge: #f5f5f5;
+  --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 *,
@@ -50,103 +44,58 @@ body {
   justify-content: center;
   align-items: flex-start;
   min-height: 100dvh;
-  padding: clamp(1rem, 4vw, 2.5rem);
+  padding: 0;
+  /* Full width layout typically needs 0 padding on body, content will have padding */
   position: relative;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  background:
-    radial-gradient(circle at 10% 10%, rgba(0, 168, 107, 0.04) 0%, transparent 40%),
-    radial-gradient(circle at 90% 90%, rgba(0, 119, 190, 0.04) 0%, transparent 40%);
-  pointer-events: none;
-  z-index: 0;
 }
 
 #app {
-  width: min(520px, 100%);
+  width: 100%;
+  max-width: 100%;
   display: flex;
+  flex-direction: column;
   position: relative;
   z-index: 1;
+  align-items: center;
 }
 
 .router {
   width: 100%;
+  max-width: 800px;
+  /* Content constrain */
   margin: 0 auto;
-  /* Sun Gradient (Top Right) + White Card Base */
-  /* Sun Image (Top Right) + White Card Base */
-  background: var(--card);
-  border-radius: clamp(32px, 5vw, 40px);
-  padding: clamp(2rem, 6vw, 3.6rem);
+  background: var(--bg);
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 2rem);
   display: flex;
   flex-direction: column;
   gap: clamp(1.5rem, 4vw, 2.6rem);
-  border: 1px solid var(--brand-pink-soft);
-  box-shadow: var(--shadow);
-  position: relative;
-  overflow: hidden;
-  min-height: clamp(640px, 100dvh, 920px);
-}
-
-/* Coral Shape (Bottom Right) */
-/* Coral Silhouette (Bottom Right) */
-.router::before {
-  content: '';
-  position: absolute;
-  width: 280px;
-  height: 280px;
-  background: url('../public/coral.png') no-repeat center / contain;
-  opacity: 0.15;
-  bottom: -40px;
-  right: -50px;
-  top: auto;
+  /* Flat design adjustments */
   border-radius: 0;
-  transform: none;
-  z-index: 0;
-}
-
-/* Sea Shape (Bottom Left) */
-/* Mangrove Silhouette (Bottom Left) */
-.router::after {
-  content: '';
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  background: url('../public/mangrove.png') no-repeat center / contain;
-  opacity: 0.12;
-  bottom: -60px;
-  left: -80px;
-  border-radius: 0;
-  z-index: 0;
-}
-
-.router>* {
+  border: none;
+  box-shadow: none;
   position: relative;
-  z-index: 1;
+  min-height: 100vh;
 }
 
 .router__header {
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 1rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--bg-alt);
+  margin-bottom: 1rem;
 }
 
 .router__brand {
   align-self: flex-start;
-  padding: 0.35rem 0.95rem;
-  border-radius: 999px;
-  background: var(--badge);
-  color: var(--brand-pink-strong);
-  font-family: var(--font-accent);
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  padding: 0;
+  background: transparent;
+  color: var(--brand-primary-strong);
+  font-family: var(--font-base);
+  font-weight: 700;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  font-size: 0.82rem;
+  font-size: 1rem;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -155,7 +104,7 @@ body::before {
 .router__brand.has-image {
   padding: 0;
   background: transparent;
-  border-radius: 0.75rem;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -171,17 +120,18 @@ body::before {
 .router__brand-logo {
   width: 40px;
   height: 40px;
-  border-radius: 14px;
-  object-fit: cover;
-  box-shadow: 0 12px 28px rgba(31, 39, 51, 0.22);
-  background: #fff;
-  padding: 0.2rem;
+  border-radius: 0;
+  /* Sharp */
+  object-fit: contain;
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
 }
 
 .router__brand.has-image .router__brand-logo {
   height: 100%;
   width: auto;
-  border-radius: 0.75rem;
+  border-radius: 0;
   padding: 0;
   object-fit: contain;
   box-shadow: none;
@@ -198,27 +148,28 @@ body::before {
 
 .router__heading {
   margin: 0;
-  font-family: var(--font-accent);
-  font-size: clamp(1.5rem, 5vw, 2.2rem);
+  font-family: var(--font-base);
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
   letter-spacing: 0.02em;
-  line-height: 1.2;
-  color: var(--text-strong);
+  line-height: 1.3;
+  font-weight: 500;
+  color: var(--text-black);
 }
 
 .router__lead {
   margin: 0;
-  font-size: clamp(0.85rem, 3.5vw, 0.95rem);
-  line-height: 1.9;
+  font-size: clamp(0.9rem, 3.5vw, 1rem);
+  line-height: 1.8;
   color: var(--text-muted);
 }
 
 .router__note {
   display: inline-flex;
-  margin-top: 0.35rem;
-  padding: 0.3rem 0.9rem;
-  border-radius: 999px;
-  background: var(--badge);
-  color: var(--brand-pink-strong);
+  margin-top: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  background: var(--bg-alt);
+  color: var(--brand-primary-strong);
   font-size: 0.9rem;
   font-weight: 600;
 }
@@ -237,112 +188,116 @@ body::before {
   display: flex;
   gap: 0.65rem;
   padding: 0.85rem 1rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.6);
-  border: 1px solid var(--brand-pink-soft);
-  font-size: 0.92rem;
-  line-height: 1.5;
+  border-radius: 4px;
+  background: var(--bg-alt);
+  border: none;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-strong);
 }
 
 .router__story li::before {
-  content: '•';
-  font-size: 1.6rem;
-  line-height: 1;
-  color: var(--brand-pink);
-  margin-top: -0.15rem;
+  content: '■';
+  font-size: 0.8rem;
+  line-height: 2;
+  color: var(--brand-primary);
+  margin-top: 0;
 }
 
 .router__buttons {
   display: flex;
   flex-direction: column;
-  gap: clamp(1rem, 4vw, 1.4rem);
+  gap: 1.2rem;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .router__button {
   position: relative;
   appearance: none;
   border: none;
-  border-radius: 32px;
-  padding: clamp(1.6rem, 6vw, 2rem);
-  background: linear-gradient(135deg, #ffffff 0%, #F0FFFB 100%);
-  /* Clean white to mint */
-  border: 1px solid var(--brand-pink-soft);
-  color: var(--text-strong);
-  text-align: left;
+  border-radius: 4px;
+  padding: 0.9rem 2rem;
+  background: var(--brand-primary);
+  color: #ffffff;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
   cursor: pointer;
-  box-shadow: 0 24px 46px rgba(31, 39, 51, 0.18);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  box-shadow: none;
+  transition: background 0.3s ease, opacity 0.3s ease;
   overflow: hidden;
+  width: 100%;
 }
 
-
-
 .router__button:hover:not(:disabled) {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(79, 195, 247, 0.25);
-  border-color: var(--brand-light-blue);
+  background: var(--text-strong);
+  /* Dark grey on hover per spec */
+  transform: none;
+  box-shadow: none;
 }
 
 .router__button:active:not(:disabled) {
-  transform: translateY(-1px);
+  opacity: 0.9;
+  transform: none;
 }
 
 .router__button:disabled {
   cursor: wait;
-  opacity: 0.75;
-  box-shadow: none;
+  opacity: 0.6;
+  background: var(--text-muted);
 }
 
 .router__button-label {
-  font-family: var(--font-accent);
-  font-size: clamp(1.3rem, 4vw, 1.8rem);
-  letter-spacing: 0.08em;
+  font-family: var(--font-base);
+  font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
 }
 
 .router__button-meta {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-  font-size: 0.95rem;
+  gap: 0;
+  font-size: 0.9rem;
 }
 
 .router__button-meta small {
   font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-family: var(--font-accent);
+  opacity: 0.9;
+  font-weight: 400;
 }
 
 .router__status {
   margin: auto 0 0;
   text-align: center;
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-weight: 500;
+  font-size: 0.9rem;
   padding: 0.8rem 1rem;
-  border-radius: 16px;
+  border-radius: 4px;
   border: 1px solid transparent;
 }
 
 .router__status[data-type='info'] {
-  color: var(--brand-pink-strong);
-  background: rgba(0, 168, 107, 0.08);
-  border-color: rgba(0, 168, 107, 0.2);
+  color: var(--brand-primary-strong);
+  background: rgba(141, 194, 31, 0.1);
+  border-color: var(--brand-primary);
 }
 
 .router__status[data-type='error'] {
   color: #a73636;
   background: rgba(167, 54, 54, 0.08);
-  border-color: rgba(167, 54, 54, 0.2);
+  border-color: #a73636;
 }
 
 .router__status[data-type='warn'] {
   color: #a0622a;
   background: rgba(160, 98, 42, 0.08);
-  border-color: rgba(160, 98, 42, 0.16);
+  border-color: #a0622a;
 }
 
 .router__status[hidden] {
@@ -350,27 +305,8 @@ body::before {
 }
 
 @media (min-width: 768px) {
-  body {
-    padding: clamp(1.5rem, 4vw, 3rem);
-  }
-
-  #app {
-    width: min(620px, 100%);
-  }
-
-  .router {
-    border-radius: clamp(36px, 4vw, 48px);
-  }
-}
-
-@media (min-width: 1080px) {
-  body {
-    background:
-      var(--bg);
-    background-size: auto;
-  }
-
-  #app {
-    width: min(720px, 100%);
+  .router__header {
+    align-items: center;
+    text-align: center;
   }
 }
