@@ -1,7 +1,7 @@
 const DEFAULT_LABELS = {
-  beginner: 'ライトカップ',
-  intermediate: 'ミディアムカップ',
-  advanced: 'フルシティカップ',
+  beginner: 'アンケート1',
+  intermediate: 'アンケート2',
+  advanced: 'アンケート3',
 }
 
 const DEFAULT_ROUTER_DESCRIPTIONS = {
@@ -84,6 +84,21 @@ const TIERS = [
 ]
 
 const app = document.querySelector('#app')
+//const lang = app.dataset.lang || 'en'
+const lang = 'ja' // Force Japanese
+
+const TEXTS = {
+  ja: {
+    title: '口コミ投稿',
+    lead: 'Pisteをご利用いただきありがとうございます。<br>アンケートにご協力いただいたお客様に、お得な特典をプレゼントさせて頂きます。',
+    step1: 'アンケートに回答',
+    step2: 'Googleマップで口コミを投稿',
+    step3: 'スタッフに画面を提示して特典GET',
+    start: 'アンケートを始める',
+    loading: '読み込み中...',
+    error: 'エラーが発生しました',
+  },
+}
 if (!app) {
   throw new Error('#app が見つかりません。')
 }

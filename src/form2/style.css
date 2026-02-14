@@ -1,9 +1,9 @@
 :root {
-  /* Soft, modern gothic fonts */
-  --font-base: 'Hiragino Maru Gothic ProN', 'Rounded Mplus 1c', 'Quicksand', 'Verdana', sans-serif;
+  /* Modern Standard Gothic */
+  --font-base: 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
   color-scheme: only light;
   font-family: var(--font-base);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.05em;
 
   /* Piste Palette */
   --bg: #ffffff;
