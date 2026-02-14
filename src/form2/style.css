@@ -1,7 +1,9 @@
 :root {
-  --font-base: 'Arial', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+  /* Soft, modern gothic fonts */
+  --font-base: 'Hiragino Maru Gothic ProN', 'Rounded Mplus 1c', 'Quicksand', 'Verdana', sans-serif;
   color-scheme: only light;
   font-family: var(--font-base);
+  letter-spacing: 0.03em;
 
   /* Piste Palette */
   --bg: #ffffff;
@@ -67,7 +69,7 @@ body {
   width: 100%;
   max-width: 800px;
   background: var(--panel);
-  border-radius: 0;
+  border-radius: 20px;
   padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 2rem);
   border: none;
   box-shadow: none;
@@ -172,7 +174,7 @@ body {
 }
 
 .form2__question {
-  border-radius: 4px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   padding: 1.5rem;
   background: var(--panel-muted);
@@ -198,7 +200,7 @@ body {
   font-size: 0.85rem;
   color: #fff;
   background: var(--brand-primary-strong);
-  border-radius: 4px;
+  border-radius: 8px;
   align-self: flex-start;
   padding: 0.2rem 0.6rem;
   font-weight: 600;
@@ -220,7 +222,7 @@ body {
 
 .form2__badge {
   padding: 0.2rem 0.6rem;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 0.8rem;
   background: var(--bg-alt);
   color: var(--text-muted);
@@ -237,7 +239,7 @@ body {
 
 .form2__select {
   width: 100%;
-  border-radius: 4px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   padding: 0.9rem 1rem;
   font-size: 1rem;
@@ -267,7 +269,7 @@ body {
 
 .form2__textarea {
   width: 100%;
-  border-radius: 4px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   padding: 1rem;
   font-size: 1rem;
@@ -310,18 +312,19 @@ body {
 
 .form2__rating-button {
   appearance: none;
-  border: 1px solid var(--border);
-  width: 44px;
-  height: 44px;
-  border-radius: 4px;
-  background: #fff;
-  font-size: 1.2rem;
-  color: #cccccc;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 1.4rem;
+  color: #dddddd;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+  padding: 0;
 }
 
 .form2__rating-button--number {
@@ -341,13 +344,14 @@ body {
 
 .form2__rating-button.is-filled,
 .form2__rating-button.is-active {
-  color: #fff;
-  background: var(--brand-primary);
-  border-color: var(--brand-primary);
+  color: #f5c344;
+  background: transparent;
+  transform: scale(1.1);
 }
 
 .form2__rating-button.is-active {
-  background: var(--brand-primary-strong);
+  color: #f5c344;
+  filter: drop-shadow(0 0 4px rgba(245, 195, 68, 0.5));
 }
 
 .form2__actions {
@@ -357,7 +361,7 @@ body {
 .form2__button {
   width: 100%;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   padding: 1rem 1.5rem;
   font-size: 1.1rem;
   font-weight: 600;
@@ -380,7 +384,7 @@ body {
 
 .form2__status {
   margin: 1rem 0 0;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 0.8rem 1rem;
   font-size: 0.95rem;
   text-align: center;
