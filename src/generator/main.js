@@ -77,7 +77,7 @@ const brandElements = {
 const promptKey = app.dataset.promptKey || 'page1'
 const tierKey = app.dataset.tier || ''
 
-const LANG = promptKey === 'page2' ? 'en' : 'ja'
+const LANG = 'ja'
 
 const MESSAGES = {
   ja: {
